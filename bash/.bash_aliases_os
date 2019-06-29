@@ -1,6 +1,6 @@
 
 # General commands
-alias ls='ls -ahil'
+alias ls='ls -ahil --color=auto'
 alias lsn='ls'
 # Change dir
 alias cdg='cd ~/github'
@@ -16,6 +16,8 @@ alias reboot='sudo reboot'
 # Edit this file
 alias bae='vim ~/.bashrc'
 alias bas='source ~/.bashrc'
+# List users
+alias lau='less /etc/passwd'
 # Packages
 alias sai='sudo apt-get install'
 alias sau='sudo apt-get update'

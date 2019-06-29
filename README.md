@@ -113,6 +113,18 @@ fse
 /dev/sdc2 /media/arcadas ext4 defaults 0 0
 ```
 
+Reboot
+```sh
+reboot
+```
+
+Set group for volumes
+```sh
+sudo chown -R arcadas:arcadas /media/nas
+sudo chown -R arcadas:arcadas /media/arcadas
+sudo chmod 777 -R /media/nas/torrent
+```
+
 ## Setup Hosts
 
 ```sh
@@ -121,3 +133,7 @@ sudo vim /etc/hosts
 # Add the following
 127.0.0.1  arcadas.com transmission.arcadas.com media.arcadas.com gitlab.arcadas.com cockpit.arcadas.com portainer.arcadas.com
 ```
+
+## Setup Transmission
+
+[Transmission README](transmission/README.md)
