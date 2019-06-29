@@ -1,0 +1,70 @@
+
+f_grbd() {
+	git push origin :$1
+}
+
+f_grbdf() {
+	git branch -rd origin/$1
+}
+
+f_gctnbp() {
+	git branch $1
+	git reset --hard HEAD~1
+	git checkout $1
+	git push -u origin $1
+}
+
+f_grcp() {
+	git reset --hard HEAD
+	git clean -f
+	git pull
+}
+
+# Remote all local and remote branch, whose have pp- prefix
+#f_gmbdf() {
+#	git branch -r | awk -F/ '/\/pp-/{print $2}' | xargs -I {} git branch -D {}
+#	git branch -r | awk -F/ '/\/pp-/{print $2}' | xargs -I {} git branch -rd origin/{}
+#}
+
+# Git log history
+alias gct='git log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'
+# Git fa kirajzolása parancssorban (utolsó 10 sor)
+alias glgt='git log --graph --oneline --all --decorate -n 10'
+# List all branches
+alias gba='git branch -a'
+# Delete branch
+alias gbd='git branch -d'
+# Force delete branch
+alias gbdf='git branch -D'
+# Delete all merged local branch
+alias gbald='git branch --merged | grep -v \* | xargs git branch -D'
+# Delete all merged remote branch from local repo
+alias gbard='git remote prune origin'
+# Add all untracked files to git
+alias ga='git add -A'
+# Commit with add
+alias gc='git commit -am'
+# Checkout
+alias gco='git checkout'
+# Checkout master
+alias gcom='git checkout master'
+# Pull master
+alias gpom='git pull origin master'
+# Status
+alias gs='git status'
+# Status in short format
+alias gss='git status -sb'
+# Merge master in feature branch
+alias gmm='git merge master'
+# Merge tool
+alias gmt='git mergetool'
+# In master put all unpushed commit into new branch and push it
+alias gctnbp=f_gctnbp
+# Delete remote branch
+alias grbd=f_grbd
+# Delete local branch
+alias grbdf=f_grbdf
+# Delete all untracked local modifications and pull
+alias grcp=f_grcp
+# Könytár törlése csak a Git-ből, de lokálisan nem
+alias rmfgbnl='git rm -r --cached $1'

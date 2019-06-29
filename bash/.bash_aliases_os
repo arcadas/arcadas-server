@@ -1,0 +1,81 @@
+
+# General commands
+alias ls='ls -ahil'
+alias lsn='ls'
+# Change dir
+alias cdg='cd ~/github'
+# Create and change directory
+alias mkc='mkdir $1;cd $1;'
+# Grep
+alias grep='grep --color=auto'
+# Find files
+alias ffn='find . -name "*.*" -print | xargs grep $1'
+# Workstation
+alias poweroff='sudo poweroff'
+alias reboot='sudo reboot'
+# Edit this file
+alias bae='vim ~/.bashrc'
+alias bas='source ~/.bashrc'
+# Packages
+alias sai='sudo apt-get install'
+alias sau='sudo apt-get update'
+# Get process info with header
+alias psgh='ps -ef | grep "%1|PID"'
+# Copy with progress bar
+alias cpr='rsync --info=progress2 $1 $2'
+# List all available disks
+alias lsd='sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL'
+# Automounted disks
+# /dev/sdaX /media/mydata ext4 defaults 0 0
+alias fse='sudo vim /etc/fstab'
+# Mount disk
+alias mntd='mount -o uid=arcadas,gid=arcadas $1 $2' # disk: /dev/sdc, path
+# Mount USB drive
+alias lsu='sudo fdisk -l'
+alias mntu='sudo mount $1 $2' # usb: /dev/sdb1, path: /media/usb
+# Usage of disks
+alias dfh='df -h'
+# Size of dir (recursive)
+alias dfhr='du -sh $1'
+alias dfhf='du -h / --max-depth=1'
+# Edit cron
+alias cre='crontab -e' # Add new script to startup: @reboot /path/to/script
+# Show system log
+alias slt='tail -f /var/log/syslog'
+# Show weather
+alias wthr='curl -4 http://wttr.in/Budapest'
+# Map lan
+alias mlan='nmap -sP 192.168.1.0/24'
+# Resize image
+alias rim='convert -resize $1% $2 $3'
+# Start dummy web server from webroot
+alias pss='python -m SimpleHTTPServer 8000'
+# How to know what program is listening on a given port?
+alias lopp='sudo netstat -peant | grep ":$1 "'
+# Create symlink
+alias csl='ln -s $1 $2'
+# List packages
+alias lpbn='sudo dpkg -l | grep $1'
+# Remove all package by name
+alias rapbn='sudo apt-get remove *$1* --purge'
+# List SMB shares (IP, username)
+alias lsmbs='smbclient -L //$1 -U $2'
+# Mount SMB share (username, IP with share name: 192.168.1.1/name, where: /media/name)
+alias msmbs='sudo mount -t cifs -o username=$1 //$2 /$3'
+# Add new script to startup (/path/to/script)
+alias ansus='@reboot $1'
+
+
+f_create_usb_installer() {
+  echo "Insert USB drive in your laptop running any linux distro."
+  echo "run fdisk -l as superuser and know the alias of your usb drive (sdb, sdc, etc.)"
+  echo "run the command: dd if=/path/to/downloaded/iso of=/dev/sdx as superuser (replace sdx with your own device alias). -----> sdd without number!"
+  echo "Boot with the new usb drive"
+}
+alias cuih=f_create_usb_installer
+
+f_cut_video() {
+  echo "0 sec to 39.20"
+  echo "ffmpeg -i A.mkv -ss 00:00:00.0 -c copy -t 00:39:20.0 B.mkv"
+}
+alias cvh=f_cut_video

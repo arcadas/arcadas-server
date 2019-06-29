@@ -1,0 +1,5 @@
+alias mds='sudo service minidlna start'
+alias mdb='sudo service minidlna stop'
+alias mdr='sudo service minidlna restart'
+alias mdl='sudo service minidlna status'
+alias mdf='sudo service minidlna force-reload'
