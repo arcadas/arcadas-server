@@ -136,4 +136,4 @@ sudo vim /etc/hosts
 
 ## Setup Transmission
 
-[Transmission README](transmission/README.md)
+[README](transmission)

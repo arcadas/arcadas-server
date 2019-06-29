@@ -12,6 +12,7 @@ cp ~/github/transmission/settings.json ~/.config/transmission
 ```
 
 In settings.json do not overwrite download dirs! You define it in docker-compose.yml.
+
 ```json
 "download-dir": "/downloads",
 "incomplete-dir": "/downloads",
@@ -43,7 +44,7 @@ To monitor the logs of the container in realtime:
 sudo docker logs -f transmission
 ```
 
-## Web GUI:
+## Web GUI
 
 ```http
 # Change the IP
