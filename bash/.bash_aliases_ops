@@ -2,6 +2,7 @@
 # Docker
 
 alias drcp='sudo docker ps -a'
+alias drcc='sudo docker container start $1'
 alias drcs='sudo docker container stop $1'
 alias drcr='sudo docker container rm $1'
 alias drcu='sudo docker-compose up -d'

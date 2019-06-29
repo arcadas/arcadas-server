@@ -8,5 +8,3 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /home/arcadas/.ssh:/etc/nginx/certs
-    environment:
-      - DEFAULT_HOST=arcadas.com
