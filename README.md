@@ -114,11 +114,13 @@ fse
 ```
 
 Reboot
+
 ```sh
 reboot
 ```
 
 Set group for volumes
+
 ```sh
 sudo chown -R arcadas:arcadas /media/nas
 sudo chown -R arcadas:arcadas /media/arcadas

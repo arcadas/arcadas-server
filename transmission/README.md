@@ -3,7 +3,7 @@
 ## Config
 
 Check settings.json and docker-compose.yml and update. \
-Documentation: https://hub.docker.com/r/linuxserver/transmission/
+Documentation: [linuxserver-transmission](https://hub.docker.com/r/linuxserver/transmission/)
 
 ```sh
 # Put settings.json into config folder
