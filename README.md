@@ -155,6 +155,10 @@ openssl req -x509 -out localhost.crt -keyout localhost.key \
 mv localhost.* ~/.ssh/
 ```
 
+Import certificate into OS (macOS)
+
+`Keychain Access -> File -> Import Items... -> localhost.crt`
+
 ## Certificates for Production
 
 Setup SSL Certificate by Let’s Encrypt.
@@ -207,7 +211,6 @@ To monitor the logs of the container in realtime:
 ```sh
 sudo docker logs -f transmission
 ```
-
 
 ## Nginx Reverse Proxy
 

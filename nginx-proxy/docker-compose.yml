@@ -18,9 +18,9 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Budapest
-      - TRANSMISSION_WEB_HOME=/kettu/
       - VIRTUAL_HOST=transmission.arcadas.com
       - VIRTUAL_PORT=9091
+      - VIRTUAL_PROTO=https
     volumes:
       - /home/arcadas/.config/transmission:/config
       - /media/nas/torrent:/downloads
