@@ -17,21 +17,3 @@ cd ~/github/arcadas-server/nginx-proxy
 # Detached by -d
 sudo docker-compose up -d
 ```
-
-Stop:
-
-```sh
-sudo docker stop nginx-proxy
-```
-
-Shell access whilst the container is running:
-
-```sh
-sudo docker exec -it nginx-proxy /bin/bash
-```
-
-To monitor the logs of the container in realtime:
-
-```sh
-sudo docker logs -f nginx-proxy
-```

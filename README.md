@@ -23,7 +23,7 @@ sudo apt-get update
 ## Must have apps
 
 ```sh
-sudo apt-get -y install vim mc ufw samba git xclip nmap
+sudo apt-get -y install vim mc ufw git xclip nmap
 ```
 
 ## Install and config SSH
@@ -127,6 +127,38 @@ sudo chown -R arcadas:arcadas /media/arcadas
 sudo chmod 777 -R /media/nas/torrent
 ```
 
+## Samba shares
+
+Install and config.
+
+```sh
+sudo apt-get -y install samba
+sudo smbpasswd -a arcadas
+sudo cp /etc/samba/smb.conf ~/.config_original
+sudo vim /etc/samba/smb.conf
+# Add this to the very end of the file:
+[nas]
+   path = /media/nas
+   valid users = arcadas
+   guest ok = no
+   read only = no
+
+[arcadas]
+   path = /media/arcadas
+   valid users = arcadas
+   guest ok = no
+   read only = no
+
+[github]
+   path = /home/arcadas/github
+   valid users = arcadas
+   guest ok = no
+   read only = no
+# Restart
+sudo service smbd restart
+```
+
+
 ## Setup Hosts
 
 ```sh
@@ -144,6 +176,7 @@ Documentation: [Certificates for localhost](https://letsencrypt.org/docs/certifi
 
 ```sh
 # Generate certificate
+# !!! Change localhost to domain name (e.g.: transmission.arcadas.com)
 openssl req -x509 -out localhost.crt -keyout localhost.key \
   -newkey rsa:2048 -nodes -sha256 \
   -subj '/CN=localhost' -extensions EXT -config <( \
@@ -152,12 +185,16 @@ openssl req -x509 -out localhost.crt -keyout localhost.key \
 
 ```sh
 # Move into .ssh folder
+# Change loclahost to domain name
 mv localhost.* ~/.ssh/
 ```
 
 Import certificate into OS (macOS)
 
+Change localhost name to domain name. \
 `Keychain Access -> File -> Import Items... -> localhost.crt`
+
+Open certificate and select `Always Trust`.
 
 ## Certificates for Production
 
