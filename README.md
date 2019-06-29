@@ -136,6 +136,25 @@ sudo vim /etc/hosts
 127.0.0.1  arcadas.com transmission.arcadas.com media.arcadas.com gitlab.arcadas.com cockpit.arcadas.com portainer.arcadas.com
 ```
 
+## Certificates Development
+
+Setup SSL Certificate by OpenSSL.
+
+Documentation: [Certificates for localhost](https://letsencrypt.org/docs/certificates-for-localhost/)
+
+```sh
+# Generate certificate
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+```sh
+# Move into .ssh folder
+mv localhost.* ~/.ssh/
+```
+
 ## Certificates Production
 
 Setup SSL Certificate by Let’s Encrypt.
@@ -160,25 +179,6 @@ sudo certbot --nginx
 # Agree
 # Yes
 # arcadas.com
-```
-
-## Certificates Development
-
-Setup SSL Certificate by OpenSSL.
-
-Documentation: [Certificates for localhost](https://letsencrypt.org/docs/certificates-for-localhost/)
-
-```sh
-# Generate certificate
-openssl req -x509 -out localhost.crt -keyout localhost.key \
-  -newkey rsa:2048 -nodes -sha256 \
-  -subj '/CN=localhost' -extensions EXT -config <( \
-   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
-```
-
-```sh
-# Move into .ssh folder
-mv localhost.* ~/.ssh/
 ```
 
 ## Setup Transmission
