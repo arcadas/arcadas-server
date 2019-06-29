@@ -99,6 +99,20 @@ source .bashrc
 Check all aliases before use them, please! \
 You can disable all types of aliases in .bashrc.
 
+## Automount HDDs
+
+__Check lables and FS type before run!__
+
+```sh
+# Alias - List all available disks
+lsd
+# Alias - Edit fstab
+fse
+# Add disks by lable with name
+/dev/sda1 /media/nas ext4 defaults 0 0
+/dev/sdc2 /media/arcadas ext4 defaults 0 0
+```
+
 ## Setup Hosts
 
 ```sh
