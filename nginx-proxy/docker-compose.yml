@@ -8,7 +8,5 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /home/arcadas/.ssh:/etc/nginx/certs
-  whoami:
-    image: jwilder/whoami
     environment:
-      - VIRTUAL_HOST=whoami.local
+      - DEFAULT_HOST=arcadas.com
