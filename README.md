@@ -136,7 +136,7 @@ sudo vim /etc/hosts
 127.0.0.1  arcadas.com transmission.arcadas.com media.arcadas.com gitlab.arcadas.com cockpit.arcadas.com portainer.arcadas.com
 ```
 
-## Certificates Development
+## Certificates for Development
 
 Setup SSL Certificate by OpenSSL.
 
@@ -155,7 +155,7 @@ openssl req -x509 -out localhost.crt -keyout localhost.key \
 mv localhost.* ~/.ssh/
 ```
 
-## Certificates Production
+## Certificates for Production
 
 Setup SSL Certificate by Let’s Encrypt.
 
@@ -181,6 +181,10 @@ sudo certbot --nginx
 # arcadas.com
 ```
 
-## Setup Transmission
+## Nginx Reverse Proxy
+
+[README](nginx-proxy)
+
+## Transmission
 
 [README](transmission)
