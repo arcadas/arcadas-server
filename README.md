@@ -136,6 +136,51 @@ sudo vim /etc/hosts
 127.0.0.1  arcadas.com transmission.arcadas.com media.arcadas.com gitlab.arcadas.com cockpit.arcadas.com portainer.arcadas.com
 ```
 
+## Certificates Production
+
+Setup SSL Certificate by Let’s Encrypt.
+
+Documentation: [Gist](https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8)
+
+Install certbot
+
+```sh
+sudo apt-get -y install software-properties-common
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get -y install certbot
+sudo apt-get -y install python-certbot-nginx
+```
+
+Setup the certificates & convert Virtual Hosts to HTTPS
+
+```sh
+sudo certbot --nginx
+# perger1984@gmail.com
+# Agree
+# Yes
+# arcadas.com
+```
+
+## Certificates Development
+
+Setup SSL Certificate by OpenSSL.
+
+Documentation: [Certificates for localhost](https://letsencrypt.org/docs/certificates-for-localhost/)
+
+```sh
+# Generate certificate
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+```
+
+```sh
+# Move into .ssh folder
+mv localhost.* ~/.ssh/
+```
+
 ## Setup Transmission
 
 [README](transmission)
