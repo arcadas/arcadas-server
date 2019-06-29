@@ -181,6 +181,34 @@ sudo certbot --nginx
 # arcadas.com
 ```
 
+## Docker
+
+Build and run
+
+```sh
+cd ~/path/to/docker-compose.yml
+sudo docker-compose up -d
+```
+
+Stop:
+
+```sh
+sudo docker stop transmission
+```
+
+Shell access whilst the container is running:
+
+```sh
+sudo docker exec -it transmission /bin/bash
+```
+
+To monitor the logs of the container in realtime:
+
+```sh
+sudo docker logs -f transmission
+```
+
+
 ## Nginx Reverse Proxy
 
 [README](nginx-proxy)

@@ -5,12 +5,6 @@
 Check settings.json and docker-compose.yml and update. \
 Documentation: [linuxserver-transmission](https://hub.docker.com/r/linuxserver/transmission/)
 
-```sh
-# Put settings.json into config folder
-mkdir ~/.config/transmission
-cp ~/github/transmission/settings.json ~/.config/transmission
-```
-
 In settings.json do not overwrite download dirs! You define it in docker-compose.yml.
 
 ```json
@@ -18,30 +12,12 @@ In settings.json do not overwrite download dirs! You define it in docker-compose
 "incomplete-dir": "/downloads",
 ```
 
-## Build and run
+Docker compose: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
 
-```sh
-cd ~/github/arcadas-server/transmission
-# Detached by -d
-sudo docker-compose up -d
-```
+TODO - Change rpc-whitelist without `403 forbidden` over nginx-proxy!
 
-Stop:
-
-```sh
-sudo docker stop transmission
-```
-
-Shell access whilst the container is running:
-
-```sh
-sudo docker exec -it transmission /bin/bash
-```
-
-To monitor the logs of the container in realtime:
-
-```sh
-sudo docker logs -f transmission
+```json
+"rpc-whitelist": "*",
 ```
 
 ## Web GUI

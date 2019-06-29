@@ -2,9 +2,30 @@ version: '2'
 
 services:
   nginx-proxy:
+    container_name: nginx-proxy
     image: jwilder/nginx-proxy
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /home/arcadas/.ssh:/etc/nginx/certs
+
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest
+      - TRANSMISSION_WEB_HOME=/kettu/
+      - VIRTUAL_HOST=transmission.arcadas.com
+      - VIRTUAL_PORT=9091
+    volumes:
+      - /home/arcadas/.config/transmission:/config
+      - /media/nas/torrent:/downloads
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
