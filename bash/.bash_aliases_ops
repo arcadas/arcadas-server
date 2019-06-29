@@ -1,0 +1,9 @@
+
+# Docker
+
+alias drcp='sudo docker ps -a'
+alias drcs='sudo docker container stop $1'
+alias drcr='sudo docker container rm $1'
+alias drcu='sudo docker-compose up -d'
+alias drcb='sudo docker exec -it $1 /bin/bash'
+alias drcl='sudo docker logs -f $1'
