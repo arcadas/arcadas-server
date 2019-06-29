@@ -54,9 +54,17 @@ fi
 ################################################################################
 
 # Custom Colorized Prompt with Git Info
+
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+force_color_prompt=yes
+
 parse_git_branch() {
  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ on \1/'
 }
+
 if [ "$color_prompt" = yes ]; then
  PS1='\[\033[01;32m\]\h\[\033[00m\] in \[\033[01;36m\]\w\[\033[01;33m\]$(parse_git_branch)\[\033[00m\] \$\n> '
 else

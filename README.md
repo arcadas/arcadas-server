@@ -92,7 +92,7 @@ Create backup and copy all files from bash to home folder and run:
 ```sh
 cd
 cp .bashrc .bashrc_original
-cp github/arcadas-server/bash/* .
+cp -a github/arcadas-server/bash/. .
 source .bashrc
 ```
 
