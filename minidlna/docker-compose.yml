@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  minidlna:
+    image: vladgh/minidlna
+    container_name: minidlna
+    network_mode: host
+    environment:
+      - MINIDLNA_MEDIA_DIR=/media
+    volumes:
+      - /media/nas/movies:/media
+    ports:
+      - 8200:8200
+    restart: unless-stopped

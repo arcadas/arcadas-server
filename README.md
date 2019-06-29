@@ -158,7 +158,6 @@ sudo vim /etc/samba/smb.conf
 sudo service smbd restart
 ```
 
-
 ## Setup Hosts
 
 ```sh
@@ -251,8 +250,62 @@ sudo docker logs -f transmission
 
 ## Nginx Reverse Proxy
 
-[README](nginx-proxy)
+Documentation: \
+[Automated Nginx Reverse Proxy for Docker](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/) \
+[GitHub: jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy)
+
+Free port 80 (e.g.: from NginX)
+
+```sh
+sudo service nginx stop
+```
+
+Build and run
+
+```sh
+cd ~/github/arcadas-server/nginx-proxy
+# Detached by -d
+sudo docker-compose up -d
+```
 
 ## Transmission
 
-[README](transmission)
+Check settings.json and docker-compose.yml and update. \
+Documentation: [linuxserver-transmission](https://hub.docker.com/r/linuxserver/transmission/)
+
+In settings.json do not overwrite download dirs! You define it in docker-compose.yml.
+
+```json
+"download-dir": "/downloads",
+"incomplete-dir": "/downloads",
+```
+
+Docker compose: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
+
+TODO - Change rpc-whitelist without `403 forbidden` over nginx-proxy!
+
+```json
+"rpc-whitelist": "*",
+```
+
+Web GUI
+
+```http
+# Change the domain name
+https://transmission.arcadas.com/transmission/web
+```
+
+## MiniDLNA
+
+Documentation: [MiniDLNA](https://help.ubuntu.com/community/MiniDLNA) \
+Docker: [vladgh/minidlna](https://hub.docker.com/r/vladgh/minidlna/) \
+Docker compose: [docker-compose.yml](minidlna/docker-compose.yml)
+
+Change the media dir in the compose file.
+
+Build and run
+
+```sh
+cd ~/github/arcadas-server/minidlna
+sudo docker-compose up -d
+```
