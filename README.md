@@ -287,6 +287,12 @@ In settings.json do not overwrite download dirs! You define it in docker-compose
 "incomplete-dir": "/downloads",
 ```
 
+Create symbolic link:
+
+```sh
+ln -s /media/arcadas/movies/ /media/nas/movies/arcadas
+```
+
 Docker compose: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
 
 TODO - Change rpc-whitelist without `403 forbidden` over nginx-proxy!
