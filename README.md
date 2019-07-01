@@ -230,6 +230,12 @@ cd ~/path/to/docker-compose.yml
 sudo docker-compose up -d
 ```
 
+Up for only certain container:
+
+```sh
+docker-compose up -d <service>
+```
+
 Stop:
 
 ```sh
@@ -257,6 +263,7 @@ Documentation: \
 Free port 80 (e.g.: from NginX)
 
 ```sh
+sudo systemctl disable nginx
 sudo service nginx stop
 ```
 
@@ -323,3 +330,20 @@ sudo visudo
 arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /snap/bin/docker
 # In nano editor: CTRL+O, ENTER, CTRL+X (save and exit)
 ```
+
+## Cockpit
+
+Documentation: [cockpit-project.org](https://cockpit-project.org/)
+
+```sh
+# Add local user to docker group
+sudo usermod -aG docker arcadas
+# Install Cockpit with docker extension
+sudo apt-get -y install cockpit cockpit-docker
+```
+
+For proxy: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
+
+Default Web GUI access: [https://192.168.0.21:9090](https://192.168.0.21:9090) \
+Proxied Web GUI access: [cockpit.arcadas.com](http://cockpit.arcadas.com) (TODO: HTTPS) \
+Use your system user account and password to log in.

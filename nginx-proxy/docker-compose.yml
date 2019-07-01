@@ -2,13 +2,23 @@ version: '2'
 
 services:
   nginx-proxy:
-    container_name: nginx-proxy
     image: jwilder/nginx-proxy
+    container_name: nginx-proxy
     ports:
-      - "443:443"
+      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /home/arcadas/.ssh:/etc/nginx/certs
+
+  cockpit-proxy:
+    image: guysoft/nginx-proxy-pass
+    container_name: cockpit-proxy
+    environment:
+      - HTTP_PROTOCOL=https
+      - TARGET_SERVER=192.168.0.21:9090
+      - VIRTUAL_HOST=cockpit.arcadas.com
+    ports:
+      - 80:80
 
   transmission:
     image: linuxserver/transmission
