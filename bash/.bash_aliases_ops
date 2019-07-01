@@ -1,12 +1,15 @@
 
 # Docker
 
-alias drcp='sudo docker ps -a'
-alias drcc='sudo docker container start $1'
-alias drcs='sudo docker container stop $1'
-alias drcr='sudo docker container rm $1'
-alias drcu='sudo docker-compose up -d'
-alias drcb='sudo docker exec -it $1 /bin/bash'
-alias drcl='sudo docker logs -f $1'
-alias drcsra='sudo docker container stop $(sudo docker ps -a -q); sudo docker container rm $(sudo docker ps -a -q)'
-alias drcsr='sudo docker rm -f $1'
+alias docls='sudo docker ps -a'
+alias docstart='sudo docker container start $1'
+alias docstop='sudo docker container stop $1'
+alias docre='sudo docker container restart $1'
+alias docrm='sudo docker container rm $1'
+alias docup='sudo docker-compose up -d'
+alias docbash='sudo docker exec -it $1 /bin/bash'
+alias doclog='sudo docker logs -f $1'
+alias docrmf='sudo docker rm -f $1'
+alias docrmfa='sudo docker rm -f $(sudo docker ps -a -q)'
+
+alias dlnare='sudo docker container restart minidlna'

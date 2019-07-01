@@ -53,6 +53,8 @@ fi
 # UNIX
 ################################################################################
 
+export EDITOR="/usr/bin/vim"
+
 # Custom Colorized Prompt with Git Info
 
 case "$TERM" in

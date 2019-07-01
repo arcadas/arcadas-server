@@ -23,7 +23,7 @@ sudo apt-get update
 ## Must have apps
 
 ```sh
-sudo apt-get -y install vim mc ufw git xclip nmap
+sudo apt-get -y install vim mc ufw git xclip nmap pm-utils
 ```
 
 ## Install and config SSH
@@ -308,4 +308,18 @@ Build and run
 ```sh
 cd ~/github/arcadas-server/minidlna
 sudo docker-compose up -d
+```
+
+## Sudoers
+
+Run `sudo` command without entering a password.
+
+```sh
+# Find the paths to command files
+which pm-suspend docker
+# Edit sudoers file
+sudo visudo
+# Add user with no passwords commands
+arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /snap/bin/docker
+# In nano editor: CTRL+O, ENTER, CTRL+X (save and exit)
 ```
