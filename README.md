@@ -333,7 +333,7 @@ which pm-suspend docker
 # Edit sudoers file
 sudo visudo
 # Add user with no passwords commands
-arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /snap/bin/docker
+arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /usr/bin/docker
 # In nano editor: CTRL+O, ENTER, CTRL+X (save and exit)
 ```
 
