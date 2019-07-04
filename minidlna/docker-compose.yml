@@ -6,9 +6,11 @@ services:
     container_name: minidlna
     network_mode: host
     environment:
-      - MINIDLNA_MEDIA_DIR=/media
+      - MINIDLNA_MEDIA_DIR_1=/media/nas
+      - MINIDLNA_MEDIA_DIR_2=/media/arcadas
     volumes:
-      - /media/nas/movies:/media
+      - /media/nas/movies:/media/nas
+      - /media/arcadas/movies:/media/arcadas
     ports:
       - 8200:8200
     restart: unless-stopped
