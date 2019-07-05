@@ -256,14 +256,6 @@ sudo docker logs -f transmission
 
 ## Nginx Reverse Proxy
 
-
-
-## Jason Wilder - Nginx Reverse Proxy
-
-Documentation: \
-[Automated Nginx Reverse Proxy for Docker](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/) \
-[GitHub: jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy)
-
 Free port 80 (e.g.: from NginX)
 
 ```sh
