@@ -256,6 +256,10 @@ sudo docker logs -f transmission
 
 ## Nginx Reverse Proxy
 
+
+
+## Jason Wilder - Nginx Reverse Proxy
+
 Documentation: \
 [Automated Nginx Reverse Proxy for Docker](http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/) \
 [GitHub: jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy)
@@ -347,3 +351,7 @@ For proxy: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
 Default Web GUI access: [https://192.168.0.21:9090](https://192.168.0.21:9090) \
 Proxied Web GUI access: [cockpit.arcadas.com](http://cockpit.arcadas.com) (TODO: HTTPS) \
 Use your system user account and password to log in.
+
+## Media
+
+[Dckerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)

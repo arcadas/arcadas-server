@@ -1,24 +1,14 @@
 version: '2'
 
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    ports:
-      - 443:443
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /home/arcadas/.ssh:/etc/nginx/certs
 
-  cockpit-proxy:
-    image: guysoft/nginx-proxy-pass
-    container_name: cockpit-proxy
-    environment:
-      - HTTP_PROTOCOL=https
-      - TARGET_SERVER=192.168.0.21:9090
-      - VIRTUAL_HOST=cockpit.arcadas.com
+  nginx-reverse-proxy:
+    image: nginx
+    container_name: nginx-reverse-proxy
+    volumes:
+     - ./default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 80:80
+     - 80:80
 
   transmission:
     image: linuxserver/transmission
@@ -27,36 +17,26 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Budapest
-      - VIRTUAL_HOST=transmission.arcadas.com
-      - VIRTUAL_PORT=9091
     volumes:
       - /home/arcadas/.config/transmission:/config
       - /media/nas/torrent:/downloads
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    restart: unless-stopped
-
-  media-php:
-    build:
-      context: ./../media/php
-    environment:
-    - VIRTUAL_HOST=media-php.arcadas.com
     expose:
-      - 9000:9000
-    volumes:
-      - /home/arcadas/github/dts2ac3-webgui:/www/media
-      - ./../media/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - 9091
+      - 51413
 
   media-nginx:
     image: nginx
-    environment:
-      - VIRTUAL_HOST=media.arcadas.com
+    container_name: media-nginx
     expose:
-      - 80:80
+      - 80
     volumes:
       - /home/arcadas/github/dts2ac3-webgui:/www/media
-      - ./../media/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - media-php
+      - /home/arcadas/github/arcadas-server/media/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  media-php:
+    image: php:7.2-fpm
+    container_name: media-php
+    expose:
+      - 9000
+    volumes:
+      - /home/arcadas/github/dts2ac3-webgui:/www/media
