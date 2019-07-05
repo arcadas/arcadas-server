@@ -20,6 +20,28 @@ f_grcp() {
 	git pull
 }
 
+# Feature branch push
+f_gp() {
+  	# Get name of current feature branch
+	BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  	# Check upstream branch
+    ORIGIN=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>&1)
+  	# If there is no upstream branch
+    if [[ $ORIGIN == "fatal: no upstream"* ]]; then
+    	echo "git push -u origin $BRANCH"
+    	# Push new branch
+    	PUSHR=$(git push -u origin $BRANCH 2>&1)
+        else
+    	echo "git push"
+    	# Push
+        PUSHR=$(git push 2>&1)
+  	fi
+  	# If the push is unsuccessful
+    if [[ $PUSHR == "fatal"* ]]; then
+		echo "\n $PUSHR"
+	fi
+}
+
 # Remote all local and remote branch, whose have pp- prefix
 #f_gmbdf() {
 #	git branch -r | awk -F/ '/\/pp-/{print $2}' | xargs -I {} git branch -D {}
@@ -44,6 +66,8 @@ alias gbard='git remote prune origin'
 alias ga='git add -A'
 # Commit with add
 alias gc='git commit -am'
+# Feature branch push
+alias gp=f_gp
 # Checkout
 alias gco='git checkout'
 # Checkout master
