@@ -42,3 +42,21 @@ services:
     volumes:
       - /home/arcadas/github/dts2ac3-webgui:/www/media
       - /media/nas/movies:/media/nas/movies
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.arcadas.com
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.arcadas.com'
+        # Add any other gitlab.rb configuration here, each on its own line
+    expose:
+      - 80
+      - 443
+      - 22
+    volumes:
+      - /srv/gitlab/config:/etc/gitlab
+      - /srv/gitlab/logs:/var/log/gitlab
+      - /srv/gitlab/data:/var/opt/gitlab
