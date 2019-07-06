@@ -346,4 +346,17 @@ Use your system user account and password to log in.
 
 ## Media
 
-[Dckerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
+Github: [arcadas/dts2ac3-webgui](https://github.com/arcadas/dts2ac3-webgui) \
+Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml) \
+Nginx config: [default.conf](media/nginx/default.conf) \
+PHP-FPM with MKV tools: [Dockerfile](media/php/Dockerfile)
+
+Set write permission \
+
+```sh
+chmod a+w -R /media/nas/movies
+```
+
+TODO - set proper user roles instead global write permission!
+
+[Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)

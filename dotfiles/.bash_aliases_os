@@ -6,6 +6,8 @@ alias lsn='ls'
 alias cdg='cd ~/github'
 # Create and change directory
 alias mkc='mkdir $1;cd $1;'
+# Delete directory forced
+alias rmf='rm -rf $1'
 # Grep
 alias grep='grep --color=auto'
 # Find files
