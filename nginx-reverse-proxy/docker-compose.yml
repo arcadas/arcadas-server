@@ -12,6 +12,7 @@ services:
     links:
      - transmission
      - media-nginx
+     - gitlab
 
   transmission:
     image: linuxserver/transmission
