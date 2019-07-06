@@ -35,7 +35,7 @@ services:
       - media-php
 
   media-php:
-    build: /home/arcadas/github/arcadas-server/media/php
+    image: php-fpm-mkv
     container_name: media-php
     expose:
       - 9000

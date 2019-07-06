@@ -223,6 +223,9 @@ sudo certbot --nginx
 
 ## Docker
 
+Install Docker: [docker-ce/ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) \
+Install Docker Compose: [Compose](https://docs.docker.com/compose/install/)
+
 Build and run
 
 ```sh
@@ -351,6 +354,13 @@ Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml) \
 Nginx config: [default.conf](media/nginx/default.conf) \
 PHP-FPM with MKV tools: [Dockerfile](media/php/Dockerfile)
 
+Build image:
+
+```sh
+cd media/php
+docker build -t php-fpm-mkv .
+```
+
 Set write permission
 
 ```sh
@@ -359,4 +369,14 @@ chmod a+w -R /media/nas/movies
 
 TODO - set proper user roles instead global write permission!
 
-[Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
+Blog: [Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
+
+## Gitlab
+
+Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml)
+
+Documentation: \
+[Gitlab docker](https://docs.gitlab.com/omnibus/docker/) \
+[Install Gitlab in Docker on Ubuntu](https://copdips.com/2018/09/install-gitlab-ce-in-docker-on-ubuntu.html)
+
+URL: [gitlab.arcadas.com](http://gitlab.arcadas.com)
