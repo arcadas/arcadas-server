@@ -351,7 +351,7 @@ Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml) \
 Nginx config: [default.conf](media/nginx/default.conf) \
 PHP-FPM with MKV tools: [Dockerfile](media/php/Dockerfile)
 
-Set write permission \
+Set write permission
 
 ```sh
 chmod a+w -R /media/nas/movies
