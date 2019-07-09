@@ -338,7 +338,9 @@ arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /usr/bin/docker
 
 ## Cockpit
 
-Documentation: [cockpit-project.org](https://cockpit-project.org/)
+Documentation: \
+[cockpit-project.org](https://cockpit-project.org/) \
+[Proxying-Cockpit-over-NGINX](https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-NGINX)
 
 ```sh
 # Add local user to docker group
@@ -400,7 +402,6 @@ Europe/Budapest
 # Set timezone
 sudo timedatectl set-timezone Europe/Budapest
 ```
-
 
 ### SSH Authentication Refused
 
