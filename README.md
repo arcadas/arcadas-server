@@ -389,6 +389,19 @@ URL: [gitlab.arcadas.com](http://gitlab.arcadas.com)
 
 ## Troubleshooting
 
+### Wrong timezone issue
+
+```sh
+# Show actual timezone
+timedatectl status
+# Check our timezone in the list
+timedatectl list-timezones | grep Budapest
+Europe/Budapest
+# Set timezone
+sudo timedatectl set-timezone Europe/Budapest
+```
+
+
 ### SSH Authentication Refused
 
 If you unable to authenticate over SSH. Check this log:

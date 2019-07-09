@@ -68,7 +68,8 @@ alias lsmbs='smbclient -L //$1 -U $2'
 alias msmbs='sudo mount -t cifs -o username=$1 //$2 /$3'
 # Add new script to startup (/path/to/script)
 alias ansus='@reboot $1'
-
+# Show time details
+alias timedetails='timedatectl status'
 
 f_create_usb_installer() {
   echo "Insert USB drive in your laptop running any linux distro."
