@@ -257,6 +257,12 @@ To monitor the logs of the container in realtime:
 sudo docker logs -f transmission
 ```
 
+Restart service
+
+```sh
+sudo systemctl restart docker.socket docker.service
+```
+
 ## Nginx Reverse Proxy
 
 Free port 80 (e.g.: from NginX)
@@ -380,3 +386,56 @@ Documentation: \
 [Install Gitlab in Docker on Ubuntu](https://copdips.com/2018/09/install-gitlab-ce-in-docker-on-ubuntu.html)
 
 URL: [gitlab.arcadas.com](http://gitlab.arcadas.com)
+
+## Troubleshooting
+
+### SSH Authentication Refused
+
+If you unable to authenticate over SSH. Check this log:
+
+```sh
+sudo tail -f /var/log/secure
+Sep 14 01:26:31 new-server sshd[22107]: Authentication refused: bad ownership or modes for directory /home/dave/.ssh
+```
+
+Solution:
+
+```sh
+# Fix user directories rights
+chmod g-w /home/your_user
+chmod 700 /home/your_user/.ssh
+chmod 600 /home/your_user/.ssh/authorized_keys
+```
+
+### Docker Container Stop/Restart issue
+
+```sh
+docker restart 5ba0a86f36ea
+Error response from daemon: Cannot restart container 5ba0a86f36ea: [2] Container does not exist: container destroyed
+Error: failed to restart containers: [5ba0a86f36ea]
+```
+
+Solution:
+
+```sh
+# Reboot the host
+reboot
+```
+
+StackOverflow: [cannot-stop-or-restart-a-docker-container](https://stackoverflow.com/questions/31365827/cannot-stop-or-restart-a-docker-container)
+
+### Transmission Permission Denied
+
+Error: `Error: Unable to save resume file: Permission denied` \
+Possible another error is that the owner of transmission is `911`.
+
+Solution:
+
+```sh
+# Set the proper owner
+sudo chown -R arcadas:arcadas ~/.config/transmission
+# Set the proer rights
+sudo chmod -R g+rw ~/.config/transmission
+```
+
+StackOverflow: [transmission-started-with-a-permission-denied-now-it-wont-even-run](https://askubuntu.com/questions/522307/transmission-started-with-a-permission-denied-now-it-wont-even-run)
