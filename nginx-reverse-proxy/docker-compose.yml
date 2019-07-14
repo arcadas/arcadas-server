@@ -36,7 +36,10 @@ services:
       - media-php
 
   media-php:
+<<<<<<< HEAD
     #build: /home/arcadas/github/arcadas-server/media/php
+=======
+>>>>>>> 86cd192e7322b2c89c9e05b9dad6ef77db1c4dd6
     image: php-fpm-mkv
     container_name: media-php
     expose:
@@ -62,5 +65,8 @@ services:
       - /srv/gitlab/config:/etc/gitlab
       - /srv/gitlab/logs:/var/log/gitlab
       - /srv/gitlab/data:/var/opt/gitlab
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 86cd192e7322b2c89c9e05b9dad6ef77db1c4dd6

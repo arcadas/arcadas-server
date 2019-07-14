@@ -223,6 +223,9 @@ sudo certbot --nginx
 
 ## Docker
 
+Install Docker: [docker-ce/ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) \
+Install Docker Compose: [Compose](https://docs.docker.com/compose/install/)
+
 Build and run
 
 ```sh
@@ -252,6 +255,12 @@ To monitor the logs of the container in realtime:
 
 ```sh
 sudo docker logs -f transmission
+```
+
+Restart service
+
+```sh
+sudo systemctl restart docker.socket docker.service
 ```
 
 ## Nginx Reverse Proxy
@@ -329,7 +338,9 @@ arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /usr/bin/docker
 
 ## Cockpit
 
-Documentation: [cockpit-project.org](https://cockpit-project.org/)
+Documentation: \
+[cockpit-project.org](https://cockpit-project.org/) \
+[Proxying-Cockpit-over-NGINX](https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-NGINX)
 
 ```sh
 # Add local user to docker group
@@ -351,7 +362,14 @@ Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml) \
 Nginx config: [default.conf](media/nginx/default.conf) \
 PHP-FPM with MKV tools: [Dockerfile](media/php/Dockerfile)
 
-Set write permission \
+Build image:
+
+```sh
+cd media/php
+docker build -t php-fpm-mkv .
+```
+
+Set write permission
 
 ```sh
 chmod a+w -R /media/nas/movies
@@ -359,4 +377,79 @@ chmod a+w -R /media/nas/movies
 
 TODO - set proper user roles instead global write permission!
 
-[Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
+Blog: [Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
+
+## Gitlab
+
+Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml)
+
+Documentation: \
+[Gitlab docker](https://docs.gitlab.com/omnibus/docker/) \
+[Install Gitlab in Docker on Ubuntu](https://copdips.com/2018/09/install-gitlab-ce-in-docker-on-ubuntu.html)
+
+URL: [gitlab.arcadas.com](http://gitlab.arcadas.com)
+
+## Troubleshooting
+
+### Wrong timezone issue
+
+```sh
+# Show actual timezone
+timedatectl status
+# Check our timezone in the list
+timedatectl list-timezones | grep Budapest
+Europe/Budapest
+# Set timezone
+sudo timedatectl set-timezone Europe/Budapest
+```
+
+### SSH Authentication Refused
+
+If you unable to authenticate over SSH. Check this log:
+
+```sh
+sudo tail -f /var/log/secure
+Sep 14 01:26:31 new-server sshd[22107]: Authentication refused: bad ownership or modes for directory /home/dave/.ssh
+```
+
+Solution:
+
+```sh
+# Fix user directories rights
+chmod g-w /home/your_user
+chmod 700 /home/your_user/.ssh
+chmod 600 /home/your_user/.ssh/authorized_keys
+```
+
+### Docker Container Stop/Restart issue
+
+```sh
+docker restart 5ba0a86f36ea
+Error response from daemon: Cannot restart container 5ba0a86f36ea: [2] Container does not exist: container destroyed
+Error: failed to restart containers: [5ba0a86f36ea]
+```
+
+Solution:
+
+```sh
+# Reboot the host
+reboot
+```
+
+StackOverflow: [cannot-stop-or-restart-a-docker-container](https://stackoverflow.com/questions/31365827/cannot-stop-or-restart-a-docker-container)
+
+### Transmission Permission Denied
+
+Error: `Error: Unable to save resume file: Permission denied` \
+Possible another error is that the owner of transmission is `911`.
+
+Solution:
+
+```sh
+# Set the proper owner
+sudo chown -R arcadas:arcadas ~/.config/transmission
+# Set the proer rights
+sudo chmod -R g+rw ~/.config/transmission
+```
+
+StackOverflow: [transmission-started-with-a-permission-denied-now-it-wont-even-run](https://askubuntu.com/questions/522307/transmission-started-with-a-permission-denied-now-it-wont-even-run)
