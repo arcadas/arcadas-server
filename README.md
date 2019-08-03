@@ -71,6 +71,8 @@ ssh-keygen -t rsa -b 4096 -C "<email@address.com>"
 
 ## Setup Github
 
+SSH key:
+
 ```sh
 # Client (Not on the server!) - Copy public key to clipboard (Change the IP!)
 ssh 192.168.0.21 "cat ~/.ssh/id_rsa.pub" | pbcopy
@@ -83,6 +85,18 @@ mkdir ~/github
 cd ~/github
 git clone git@github.com:arcadas/arcadas-server.git
 # Are you sure you want to continue connecting (yes/no)? yes
+```
+
+Ignore file mode (edit code over samba share):
+
+```sh
+# Change directory to $HOME
+cd
+# Edit global git config
+vim .gitconfig
+# Ignore file mode
+[core]
+   fileMode = false
 ```
 
 ## Bash aliases
