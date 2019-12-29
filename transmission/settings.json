@@ -43,7 +43,7 @@
     "rpc-authentication-required": true,
     "rpc-bind-address": "0.0.0.0",
     "rpc-enabled": true,
-    "rpc-host-whitelist": "",
+    "rpc-host-whitelist": "transmission.arcadas.com",
     "rpc-host-whitelist-enabled": true,
     "rpc-password": "{75cd88faceef75f99f911a2f51fb009546c391bd/iQljleD",
     "rpc-port": 9091,

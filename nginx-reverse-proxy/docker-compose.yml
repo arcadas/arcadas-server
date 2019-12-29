@@ -12,11 +12,14 @@ services:
     links:
      - transmission
      - media-nginx
-     - gitlab
+     #- gitlab
 
   transmission:
     image: linuxserver/transmission
     container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
     volumes:
       - /home/arcadas/.config/transmission:/config
       - /media/nas/torrent:/downloads
@@ -36,10 +39,6 @@ services:
       - media-php
 
   media-php:
-<<<<<<< HEAD
-    #build: /home/arcadas/github/arcadas-server/media/php
-=======
->>>>>>> 86cd192e7322b2c89c9e05b9dad6ef77db1c4dd6
     image: php-fpm-mkv
     container_name: media-php
     expose:
@@ -48,25 +47,21 @@ services:
       - /home/arcadas/github/dts2ac3-webgui:/www/media
       - /media/nas/movies:/media/nas/movies
 
-  gitlab:
-    image: gitlab/gitlab-ce:latest
-    container_name: gitlab
-    restart: always
-    hostname: gitlab.arcadas.com
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.arcadas.com'
-        # Add any other gitlab.rb configuration here, each on its own line
-    expose:
-      - 80
-      - 443
-      - 22
-    volumes:
-      - /srv/gitlab/config:/etc/gitlab
-      - /srv/gitlab/logs:/var/log/gitlab
-      - /srv/gitlab/data:/var/opt/gitlab
-<<<<<<< HEAD
+ # gitlab:
+ #   image: gitlab/gitlab-ce:latest
+ #   container_name: gitlab
+ #   restart: always
+ #   hostname: gitlab.arcadas.com
+ #   environment:
+ #     GITLAB_OMNIBUS_CONFIG: |
+ #       external_url 'http://gitlab.arcadas.com'
+ #       # Add any other gitlab.rb configuration here, each on its own line
+ #   expose:
+ #     - 80
+ #     - 443
+ #     - 22
+ #   volumes:
+ #     - /srv/gitlab/config:/etc/gitlab
+ #     - /srv/gitlab/logs:/var/log/gitlab
+ #     - /srv/gitlab/data:/var/opt/gitlab
 
-
-=======
->>>>>>> 86cd192e7322b2c89c9e05b9dad6ef77db1c4dd6
