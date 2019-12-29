@@ -1,16 +1,17 @@
 
 # Docker
 
-alias docls='sudo docker ps -a'
+alias docls='sudo docker container ls'
+alias doclsa='sudo docker container ls -a'
 alias docstart='sudo docker container start $1'
 alias docstop='sudo docker container stop $1'
 alias docre='sudo docker container restart $1'
 alias docrm='sudo docker container rm $1'
+alias docrmf='sudo docker rm -f $1'
+alias docrmfa='sudo docker rm -f $(sudo docker ps -a -q)'
 alias docup='sudo docker-compose up -d'
 alias docdown='sudo docker-compose down'
 alias docbash='sudo docker exec -it $1 /bin/bash'
 alias doclog='sudo docker logs -f $1'
-alias docrmf='sudo docker rm -f $1'
-alias docrmfa='sudo docker rm -f $(sudo docker ps -a -q)'
 
 alias dlnare='sudo docker container restart minidlna'
