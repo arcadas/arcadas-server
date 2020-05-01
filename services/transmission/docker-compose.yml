@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /home/arcadas/.config/transmission:/config
+      - /media/nas/torrent:/downloads
+    expose:
+      - 9091
+      - 51413
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cal.rule=Host(`transmission.arcadas.com`)"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.services.cal.loadbalancer.server.port=9091"
+
+networks:
+  proxy:
+    external: true
+
+

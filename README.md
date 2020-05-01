@@ -115,6 +115,8 @@ You can disable all types of aliases in .bashrc.
 
 ## Automount HDDs
 
+Multiple additional services use these shared devices.
+
 __Check lables and FS type before run!__
 
 ```sh
@@ -172,13 +174,95 @@ sudo vim /etc/samba/smb.conf
 sudo service smbd restart
 ```
 
-## Setup Hosts
+## Setup Hosts File
+
+Every service will be reachable on a subdomain of arcadas.com by Traefik reverse-proxy service.
+
+We have to define these subdomains in our hosts file:
 
 ```sh
-# Open Host file
-sudo vim /etc/hosts
-# Add the following
-127.0.0.1  arcadas.com transmission.arcadas.com media.arcadas.com gitlab.arcadas.com cockpit.arcadas.com portainer.arcadas.com
+192.168.0.21 arcadas.com
+192.168.0.21 portainer.arcadas.com
+```
+
+## Docker
+
+Install Docker: [docker-ce/ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) \
+Install Docker Compose: [Compose](https://docs.docker.com/compose/install/)
+
+```sh
+# Build and run:
+cd ~/path/to/docker-compose.yml
+docker-compose up -d
+# Up for only certain container:
+docker-compose up -d <service>
+# Stop:
+docker container stop transmission
+# Shell access whilst the container is running:
+docker container exec -it transmission /bin/bash
+# To monitor the logs of the container in realtime:
+docker container logs -f transmission
+# Restart service
+sudo systemctl restart docker.socket docker.service
+```
+
+Further commands and aliases: dotfiles/.bash_aliases_ops
+
+## Traefik Reverse Proxy
+
+Free port 80 (e.g.: from NginX)
+
+```sh
+sudo systemctl disable nginx
+sudo service nginx stop
+```
+
+Run Traefik Service
+
+Documentation: https://docs.traefik.io/
+
+```sh
+# Create a custom network
+docker network create proxy
+# Start Traefik from local compose file
+cd traefik
+docker-compose up -d
+```
+
+For Traefik to discover our services, we have to add labels to our services and put services to the same network (proxy). In docker-compose.yml definition we have to add the following definitions:
+
+```sh
+version: '2'
+
+services:
+
+  service:
+    image: <image>
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cal.rule=Host(`<service>.arcadas.com`)"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.services.cal.loadbalancer.server.port=<port>"
+
+networks:
+  proxy:
+    external: true
+```
+
+## Sudoers
+
+Run `sudo` command without entering a password.
+
+```sh
+# Find the paths to command files
+which pm-suspend docker
+# Edit sudoers file
+sudo visudo
+# Add user with no passwords commands
+arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend
+# In nano editor: CTRL+O, ENTER, CTRL+X (save and exit)
 ```
 
 ## Certificates for Development
@@ -202,206 +286,12 @@ openssl req -x509 -out localhost.crt -keyout localhost.key \
 mv localhost.* ~/.ssh/
 ```
 
-Import certificate into OS (macOS)
+Import certificate into your client OS, for example mac:
 
 Change localhost name to domain name. \
 `Keychain Access -> File -> Import Items... -> localhost.crt`
 
 Open certificate and select `Always Trust`.
-
-## Certificates for Production
-
-Setup SSL Certificate by Let’s Encrypt.
-
-Documentation: [Gist](https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8)
-
-Install certbot
-
-```sh
-sudo apt-get -y install software-properties-common
-sudo add-apt-repository ppa:certbot/certbot
-sudo apt-get update
-sudo apt-get -y install certbot
-sudo apt-get -y install python-certbot-nginx
-```
-
-Setup the certificates & convert Virtual Hosts to HTTPS
-
-```sh
-sudo certbot --nginx
-# perger1984@gmail.com
-# Agree
-# Yes
-# arcadas.com
-```
-
-## Docker
-
-Install Docker: [docker-ce/ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) \
-Install Docker Compose: [Compose](https://docs.docker.com/compose/install/)
-
-Build and run
-
-```sh
-cd ~/path/to/docker-compose.yml
-sudo docker-compose up -d
-```
-
-Up for only certain container:
-
-```sh
-docker-compose up -d <service>
-```
-
-Stop:
-
-```sh
-sudo docker stop transmission
-```
-
-Shell access whilst the container is running:
-
-```sh
-sudo docker exec -it transmission /bin/bash
-```
-
-To monitor the logs of the container in realtime:
-
-```sh
-sudo docker logs -f transmission
-```
-
-Restart service
-
-```sh
-sudo systemctl restart docker.socket docker.service
-```
-
-## Nginx Reverse Proxy
-
-Free port 80 (e.g.: from NginX)
-
-```sh
-sudo systemctl disable nginx
-sudo service nginx stop
-```
-
-Build and run
-
-```sh
-cd ~/github/arcadas-server/nginx-proxy
-# Detached by -d
-sudo docker-compose up -d
-```
-
-## Transmission
-
-Check settings.json and docker-compose.yml and update. \
-Documentation: [linuxserver-transmission](https://hub.docker.com/r/linuxserver/transmission/)
-
-In settings.json do not overwrite download dirs! You define it in docker-compose.yml.
-
-```json
-"download-dir": "/downloads",
-"incomplete-dir": "/downloads",
-```
-
-Docker compose: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
-
-TODO - Change rpc-whitelist without `403 forbidden` over nginx-proxy!
-
-```json
-"rpc-whitelist": "*",
-```
-
-Web GUI
-
-```http
-# Change the domain name
-https://transmission.arcadas.com/transmission/web
-```
-
-## MiniDLNA
-
-Documentation: [MiniDLNA](https://help.ubuntu.com/community/MiniDLNA) \
-Docker: [vladgh/minidlna](https://hub.docker.com/r/vladgh/minidlna/) \
-Docker compose: [docker-compose.yml](minidlna/docker-compose.yml)
-
-Change the media dir in the compose file.
-
-Build and run
-
-```sh
-cd ~/github/arcadas-server/minidlna
-sudo docker-compose up -d
-```
-
-## Sudoers
-
-Run `sudo` command without entering a password.
-
-```sh
-# Find the paths to command files
-which pm-suspend docker
-# Edit sudoers file
-sudo visudo
-# Add user with no passwords commands
-arcadas ALL=(ALL) NOPASSWD: /usr/sbin/pm-suspend, /usr/bin/docker
-# In nano editor: CTRL+O, ENTER, CTRL+X (save and exit)
-```
-
-## Cockpit
-
-Documentation: \
-[cockpit-project.org](https://cockpit-project.org/) \
-[Proxying-Cockpit-over-NGINX](https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-NGINX)
-
-```sh
-# Add local user to docker group
-sudo usermod -aG docker arcadas
-# Install Cockpit with docker extension
-sudo apt-get -y install cockpit cockpit-docker
-```
-
-For proxy: [nginx-proxy/docker-compose.yml](nginx-proxy/docker-compose.yml)
-
-Default Web GUI access: [https://192.168.0.21:9090](https://192.168.0.21:9090) \
-Proxied Web GUI access: [cockpit.arcadas.com](http://cockpit.arcadas.com) (TODO: HTTPS) \
-Use your system user account and password to log in.
-
-## Media
-
-Github: [arcadas/dts2ac3-webgui](https://github.com/arcadas/dts2ac3-webgui) \
-Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml) \
-Nginx config: [default.conf](media/nginx/default.conf) \
-PHP-FPM with MKV tools: [Dockerfile](media/php/Dockerfile)
-
-Build image:
-
-```sh
-cd media/php
-docker build -t php-fpm-mkv .
-```
-
-Set write permission
-
-```sh
-chmod a+w -R /media/nas/movies
-```
-
-TODO - set proper user roles instead global write permission!
-
-Blog: [Dockerised Nginx with PHP](http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/)
-
-## Gitlab
-
-Docker compose: [docker-compose.yml](nginx-reverse-proxy/docker-compose.yml)
-
-Documentation: \
-[Gitlab docker](https://docs.gitlab.com/omnibus/docker/) \
-[Install Gitlab in Docker on Ubuntu](https://copdips.com/2018/09/install-gitlab-ce-in-docker-on-ubuntu.html)
-
-URL: [gitlab.arcadas.com](http://gitlab.arcadas.com)
 
 ## Troubleshooting
 
@@ -467,3 +357,23 @@ sudo chmod -R g+rw ~/.config/transmission
 ```
 
 StackOverflow: [transmission-started-with-a-permission-denied-now-it-wont-even-run](https://askubuntu.com/questions/522307/transmission-started-with-a-permission-denied-now-it-wont-even-run)
+
+### Docker-compose fails on macOS
+
+Error
+
+```sh
+docker.errors.DockerException: Credentials store error: StoreError('Credentials store docker-credential-desktop exited with "No stored credential for https://index.docker.io/v1/".')
+```
+
+Solution
+
+Delete `credsStore` value in `~/.docker/config.json` and restart Docker:
+
+```json
+{
+   "auths": {},
+   "credsStore": "",
+   "experimental": "disabled"
+}
+```
