@@ -11,6 +11,7 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.arcadas.com'
         # Add any other gitlab.rb configuration here, each on its own line
+      VIRTUAL_HOST: media.arcadas.com
     expose:
       - 80
       - 443
@@ -21,11 +22,6 @@ services:
       - /srv/gitlab/data:/var/opt/gitlab
     networks:
       - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cal.rule=Host(`gitlab.arcadas.com`)"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.cal.loadbalancer.server.port=80"
 
 networks:
   proxy:

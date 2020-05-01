@@ -5,18 +5,16 @@ services:
   portainer:
     image: portainer/portainer
     container_name: portainer
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     expose:
       - 9000
       - 8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - VIRTUAL_HOST=portainer.arcadas.com
+      - VIRTUAL_PORT=9000
     networks:
       - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cal.rule=Host(`portainer.arcadas.com`)"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.cal.loadbalancer.server.port=9000"
 
 networks:
   proxy:

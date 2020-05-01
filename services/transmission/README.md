@@ -12,7 +12,7 @@ In settings.json do not overwrite download dirs! You define it in docker-compose
 
 Docker compose: [docker-compose.yml](docker-compose.yml)
 
-TODO - Change rpc-whitelist without `403 forbidden` over nginx-proxy!
+Change rpc-whitelist without `403 forbidden` over nginx-proxy!
 
 ```json
 "rpc-whitelist": "*",

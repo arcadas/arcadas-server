@@ -14,11 +14,6 @@ services:
       - media-php
     networks:
       - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cal.rule=Host(`media.arcadas.com`)"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.cal.loadbalancer.server.port=80"
 
   media-php:
     image: php-fpm-mkv
@@ -28,6 +23,8 @@ services:
     volumes:
       - /home/arcadas/github/dts2ac3-webgui:/www/media
       - /media/nas/movies:/media/nas/movies
+    environment:
+      - VIRTUAL_HOST=media.arcadas.com
     networks:
       - proxy
 

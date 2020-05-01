@@ -106,7 +106,7 @@ Create backup and copy all files from bash to home folder and run:
 ```sh
 cd
 cp .bashrc .bashrc_original
-cp -a github/arcadas-server/bash/. .
+cp -a github/arcadas-server/dotfiles/. .
 source .bashrc
 ```
 
@@ -208,7 +208,7 @@ sudo systemctl restart docker.socket docker.service
 
 Further commands and aliases: dotfiles/.bash_aliases_ops
 
-## Traefik Reverse Proxy
+## Nginx Reverse Proxy
 
 Free port 80 (e.g.: from NginX)
 
@@ -217,34 +217,32 @@ sudo systemctl disable nginx
 sudo service nginx stop
 ```
 
-Run Traefik Service
+Run Nginx Reverse Proxy Service
 
-Documentation: https://docs.traefik.io/
+Documentation: https://github.com/nginx-proxy/nginx-proxy
 
 ```sh
 # Create a custom network
 docker network create proxy
 # Start Traefik from local compose file
-cd traefik
+cd nginx-proxy
 docker-compose up -d
 ```
 
-For Traefik to discover our services, we have to add labels to our services and put services to the same network (proxy). In docker-compose.yml definition we have to add the following definitions:
+For nginx-proxy to discover our services, we have to put services to the same network (proxy). In docker-compose.yml definition we have to add the following definitions:
 
 ```sh
 version: '2'
 
 services:
 
-  service:
+  <service>:
     image: <image>
+    environment:
+      - VIRTUAL_HOST=<service>.arcadas.com
+      - VIRTUAL_PORT=8080
     networks:
       - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cal.rule=Host(`<service>.arcadas.com`)"
-      - "traefik.docker.network=proxy"
-      - "traefik.http.services.cal.loadbalancer.server.port=<port>"
 
 networks:
   proxy:
