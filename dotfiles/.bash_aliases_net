@@ -1,0 +1,40 @@
+# In case of old system issue
+alias sagud-arc='sudo apt-get update --allow-releaseinfo-change'
+alias sagug='sudo apt-get upgrade'
+alias srb='sudo reboot'
+
+# Setup wifi
+# Add wifi
+alias wpas-edit='sudo vim /etc/wpa_supplicant/wpa_supplicant.conf'
+# network={
+#	ssid="SSID"
+#	psk="Password"
+#	key_mgmt="WPA-PSK" <-- Optional
+# }
+# Restart wifi interface
+alias dhcpcd-restart='sudo systemctl restart dhcpcd'
+# Restart wpa supplicant
+alias wpas-restart='sudo systemctl restart wpa_supplicant'
+# Verify connecation
+alias ifc='ifconfig'
+alias ifc-wlan='ifconfig wlan0'
+# Enable auto connect on boot
+alias dhcpcd-enable='sudo systemctl enable dhcpcd'
+# Enable wpa supplicant
+alias wpas-enable='sudo systemctl enable wpa_supplicant'
+# Reboot and check connections via ifconfig
+alias ping-eth='ping -I eth0 google.com'
+alias ping-wlan='ping -I wlan0 google.com'
+
+# Stop wifi 1 - Stop service
+alias wpas-wlan-stop='sudo systemctl stop wpa_supplicant@wlan0.service'
+# Stop wifi 2 - Disable interface
+alias ifc-wlan-down='sudo ifconfig wlan0 down'
+# Stop wifi 3 - Disable auto connect via wpas-edit (alias above)
+
+# Re enable wifi interface
+alias ifc-wlan-up='sudo ifconfig wlan0 up'
+alias wpas-wlan-restart='sudo systemctl start wpa_supplicant@wlan0.service'
+
+
+
